@@ -2,6 +2,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
+import subprocess
+from django_portfolio.settings import *
+import requests
+from django_portfolio.settings.base import get_secret
 
 # Create your models here.
 def get_image_filename(instance, filename):
@@ -19,12 +23,23 @@ class Article(models.Model):
     text = models.TextField(max_length=100000)
     images = models.ManyToManyField(Graphic,verbose_name="list of images", related_name="images")
 
+class GitHubAccount(object):
+
+    def __init__(self):
+
+
+    def get_authentication(self):
+        OAUTH_TOKEN = get_secret(setting="OAUTH_TOKEN")
+        print(OAUTH_TOKEN)
+        command = 'curl -H "Authorization: token {0}" https://api.github.com'.format(OAUTH_TOKEN)
+        response = subprocess.run(command)
+        return response
 
 
 
 
-
-
+class GitHubPortfolioItem(models.Model):
+    pass
 
 
 

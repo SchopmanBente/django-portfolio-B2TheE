@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .forms import *
+from .models import *
 
 
 # Create your views here.
@@ -18,3 +19,8 @@ def graphic_view(request):
 
 def success(request):
     return HttpResponse('successfully uploaded')
+
+def github(request):
+    account = GitHubAccount()
+    response = account.get_authentication()
+    return render(request,response)
